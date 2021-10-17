@@ -28,5 +28,13 @@
   },
   "engines": {
     "node": "^16 || ^15 || ^14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/AndyDev25/ZborovnaAPI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AndyDev25/ZborovnaAPI/issues",
+    "email": "itadrian.b@gmail.com"
   }
 }
