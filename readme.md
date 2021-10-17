@@ -15,6 +15,11 @@ If you find bugs, have any questions or suggestions for features, please let me 
 - Node.js v14.0.0+
 - Zborovna Account
 
+## installation
+```bash
+npm i zborovna-api
+```
+
 ## Usage
 
 ```javascript
@@ -25,7 +30,7 @@ const zborovna = new Zborovna();
 // This wil grant you access to all basic methods
 zborovna.login("username", "password").then(user => {
     // ('user') is holding all methods for Documents and User
-    
+
 }).catch(error => {
     // Catch errors
 });
