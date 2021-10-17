@@ -14,7 +14,7 @@
     "API, education, node, zborovna, school, teachers"
   ],
   "author": "AndyDev",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "files": [
     "dist"
   ],
