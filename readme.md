@@ -273,7 +273,7 @@ filters = {
 
 #### Example
 ```javascript
-const post = 'r10'; // Dokument
-const queryObject = { post, ...};
+const filter = 'listing_autorske'; // Autorské
+const queryObject = { filter, ...};
 const documents = await zborovna.getDocumentsByQuery(queryObject);
 ```
