@@ -58,6 +58,24 @@ const zborovna = new Zborovna();
 })();
 ```
 
+### Set files saving location
+
+```javascript
+const { Zborovna } = require("zborovna-api");
+const path = require("path");
+const zborovna = new Zborovna();
+
+(async () => {
+  await zborovna.login("username", "password");
+
+  const location = path.join(__dirname, "./files/");
+  // This will set where your files should save
+  zborovna.document.setLocation(location);
+
+  console.log(zborovna.document.location);
+})();
+```
+
 ### Get local file by id
 
 This will give you local file instead of downloading from server.
