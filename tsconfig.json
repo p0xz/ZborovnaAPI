@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["ESNEXT"],
+    "allowJs": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "baseUrl": ".",
+    "typeRoots": ["node_modules/@types/", "./lib/@types/"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src/*", "index.ts"]
+}
