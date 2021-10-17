@@ -237,7 +237,7 @@ const documents = await zborovna.getDocumentsByQuery(queryObject);
 ```
 
 
-#### Posts
+### Posts
 ```javascript
 posts = {
     '1' = 'Dokument',
@@ -255,7 +255,7 @@ const documents = await zborovna.getDocumentsByQuery(queryObject);
 ```
 
 
-#### Filter
+### Filter
 ```javascript
 filters = {
     'listing_kvalitne' = 'Kvalitné', // Default value
