@@ -9,6 +9,7 @@ If you find bugs, have any questions or suggestions for features, please let me 
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [API](#API)
 
 ## Requirements
 
