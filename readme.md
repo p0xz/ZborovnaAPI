@@ -25,10 +25,10 @@ const zborovna = new Zborovna();
 // This wil grant you access to all basic methods
 zborovna.login("username", "password").then(user => {
     // ('user') is holding all methods for Documents and User
-  })
-  .catch(error => {
+    
+}).catch(error => {
     // Catch errors
-  });
+});
 ```
 
 ## Examples
