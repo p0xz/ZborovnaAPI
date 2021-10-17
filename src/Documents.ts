@@ -93,7 +93,7 @@ class Document {
     const pageCount = Math.max(...(pageNavigation.match(/\d+(?=\D*$)/gm) as any));
     const DocumentRegex =
       /<table.*?cellspacing="4".*?cellpadding="0".*?border="0".*?width="95%">.*?<a.*?href="(.*?)".*?class="nove">(.*?)<\/a>.*?<img src="(.*?)".*?>.*?<strong>.*?Predmet:.*?<\/strong>(.*?)<.*?<strong>.*?<\/strong>(.*?)<.*?Pridaný:(.*?)<.*?<\/table>/gims;
-    log(`§33[DOCUMENT] §37Parsing HTML...`);
+    log(`§33[Document] §37Parsing HTML...`);
     const documents: parsedHTMLDocument[] = [...html.matchAll(DocumentRegex)].map(document => {
       const documentID = new URLSearchParams(document.at(1).replace(";", "&")).get("id");
       const documentThumbnail = ("https://www.zborovna.sk" + document.at(3)).split(";").join("&");
@@ -108,7 +108,7 @@ class Document {
         pageCount,
       };
     });
-    log(`§33[ZborovnaAPI] §37HTML parsed.`);
+    log(`§33[Document] §37HTML parsed.`);
     return documents;
   }
 }
