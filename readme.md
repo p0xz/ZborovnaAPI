@@ -17,6 +17,7 @@ If you find bugs, have any questions or suggestions for features, please let me 
 - Zborovna Account
 
 ## installation
+
 ```bash
 npm i zborovna-api
 ```
@@ -29,12 +30,14 @@ const { Zborovna } = require("zborovna-api");
 const zborovna = new Zborovna();
 
 // This wil grant you access to all basic methods
-zborovna.login("username", "password").then(user => {
+zborovna
+  .login("username", "password")
+  .then(user => {
     // ('user') is holding all methods for Documents and User
-
-}).catch(error => {
+  })
+  .catch(error => {
     // Catch errors
-});
+  });
 ```
 
 ## Examples
@@ -125,8 +128,8 @@ const zborovna = new Zborovna();
 (async () => {
   await zborovna.login("username", "password");
 
-  // This params are optional so you don't need to pass everything. 
-  // Note: Search is value for searching document you want.
+  // This params are optional so you don't need to pass everything.
+  // Note: Search is value is for searching document you want.
   const queryObject = { school, subject, year, post, filter, search, page };
   const documents = await zborovna.getDocumentsByQuery(queryObject);
 
@@ -166,6 +169,7 @@ interface parsedHTMLDocument {
 ```
 
 ## queryObject
+
 **Note**: I didn't make these key values it's based on original zborovna choose. Each value is specific and is used for representation.
 
 These are possible value for each queryObject key.
@@ -174,14 +178,15 @@ These are possible value for each queryObject key.
 
 ```javascript
 schools = [
-    1, // Základná škola
-    2, // Stredná škola
-    3, // Materská škola
-    4, // Umelecká škola
-    5, // Iné
-    6, // Špeciálna škola
-]
+  1, // Základná škola
+  2, // Stredná škola
+  3, // Materská škola
+  4, // Umelecká škola
+  5, // Iné
+  6, // Špeciálna škola
+];
 ```
+
 #### Example
 
 ```javascript
@@ -193,6 +198,7 @@ const documents = await zborovna.getDocumentsByQuery(queryObject);
 ### Subject
 
 #### General subjects
+
 ```javascript
 generalSubjects = {
     'r1'= 'Matematika',
@@ -235,7 +241,9 @@ generalSubjects = {
     'r40' = 'Rusínsky jazyk',
 }
 ```
+
 #### High school subjects
+
 ```javascript
 // This subjects are for high school
 subjects = {
@@ -258,8 +266,8 @@ const queryObject = { subject, ...};
 const documents = await zborovna.getDocumentsByQuery(queryObject);
 ```
 
-
 ### Posts
+
 ```javascript
 posts = {
     '1' = 'Dokument',
@@ -270,14 +278,15 @@ posts = {
 ```
 
 #### Example
+
 ```javascript
 const post = 'r10'; // Dokument
 const queryObject = { post, ...};
 const documents = await zborovna.getDocumentsByQuery(queryObject);
 ```
 
-
 ### Filter
+
 ```javascript
 filters = {
     'listing_kvalitne' = 'Kvalitné', // Default value
@@ -291,6 +300,7 @@ filters = {
 ```
 
 #### Example
+
 ```javascript
 const filter = 'listing_autorske'; // Autorské
 const queryObject = { filter, ...};
