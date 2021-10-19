@@ -6,61 +6,56 @@ import { parsedHTMLDocument } from "./Documents";
 import { log } from "../lib/log";
 import fs from "fs/promises";
 
-export interface Data {
-  user?: {
-    cookies: CookieJar;
-    credentials: credentials;
-  };
-}
+class Zborovna extends Document {
+  public user: any;
+  private autoLogin: boolean;
 
-class Zborovna {
-  public document: Document;
-  public data: Data;
-
-  constructor() {
-    this.document = null;
+  constructor(autoLogin = true) {
+    super();
+    this.user = null;
+    this.autoLogin = autoLogin;
   }
 
   async basePage() {
     const response = await fetch("https://www.zborovna.sk/naj.php", {
       headers: {
-        cookie: `${this.data.user.cookies.getCookie("PHPSESSID")}; ${this.data.user.cookies.getCookie("TestCookie")}`,
+        cookie: `${this.user.cookies.getCookie("PHPSESSID")}; ${this.user.cookies.getCookie("TestCookie")}`,
       },
     });
     return Document.parseDocumentHTML(await response.text());
   }
 
-  async login(username: string, password: string): Promise<Zborovna> {
+  async login(username: string, password: string): Promise<User> {
     const user = new User();
-    this.document = new Document();
     return new Promise((resolve, reject) => {
       user
         .login(username, password)
         .then(res => {
-          // @ts-ignore
-          this.data = res.data;
-          resolve(this);
+          this.user = res;
+          // console.log(res);
+
+          resolve(this.user);
         })
         .catch(error => reject(error));
     });
   }
 
   public getLocalFile(id: number) {
-    const File = this.document.getFileByID(id);
+    const File = this.getFileByID(id);
     return {
       FileName: File,
-      FileLocation: this.document.location + File,
+      FileLocation: this.location + File,
       FileFormat: Document.getFileFormat(File),
     };
   }
 
   async getServerFile(id: number) {
-    if (!!this.document.getFileByID(id)) {
+    if (!!this.getFileByID(id)) {
       log(`§33[ZborovnaAPI] §37File with id: ${id} already exist, sending data.`);
       return {
-        FileName: this.document.getFileByID(id),
-        FileLocation: this.document.location + this.document.getFileByID(id),
-        FileFormat: Document.getFileFormat(this.document.getFileByID(id)),
+        FileName: this.getFileByID(id),
+        FileLocation: this.location + this.getFileByID(id),
+        FileFormat: Document.getFileFormat(this.getFileByID(id)),
       };
     }
 
@@ -68,7 +63,7 @@ class Zborovna {
 
     const response = await fetch(page, {
       headers: {
-        cookie: `${this.data.user.cookies.getCookie("PHPSESSID")}; ${this.data.user.cookies.getCookie("TestCookie")}`,
+        cookie: `${this.user.cookies.getCookie("PHPSESSID")}; ${this.user.cookies.getCookie("TestCookie")}`,
       },
     });
     log(`§33[ZborovnaAPI] §37Requesting file with id: ${id}...`);
@@ -82,8 +77,10 @@ class Zborovna {
     const buffer: Buffer = await response.buffer();
 
     log(`§33[ZborovnaAPI] §37Writing file...`);
+    console.log(this.location + `${id}_${FileName}`);
+
     await fs
-      .writeFile(this.document.location + `${id}_${FileName}`, buffer, {
+      .writeFile(this.location + `${id}_${FileName}`, buffer, {
         encoding: "binary",
       })
       .then(() => {
@@ -95,7 +92,7 @@ class Zborovna {
 
     return {
       FileName,
-      FileLocation: this.document.location + `${id}_${FileName}`,
+      FileLocation: this.location + `${id}_${FileName}`,
       FileFormat: ContentType,
     };
   }
@@ -106,7 +103,7 @@ class Zborovna {
     return new Promise((resolve, reject) => {
       fetch(URL, {
         headers: {
-          cookie: `${this.data.user.cookies.getCookie("PHPSESSID")}; ${this.data.user.cookies.getCookie("TestCookie")}`,
+          cookie: `${this.user.cookies.getCookie("PHPSESSID")}; ${this.user.cookies.getCookie("TestCookie")}`,
         },
       })
         .then((res: any) => res.text())
