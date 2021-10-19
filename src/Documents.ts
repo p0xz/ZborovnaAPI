@@ -61,6 +61,11 @@ class Document {
     return fs.readdirSync(this.location);
   }
 
+  /**
+   *
+   * @param id
+   * @returns Return string with name of file (works only on local files)
+   */
   public getFileByID(id: number) {
     return this.getFiles().find(file => file.startsWith(String(id)));
   }
@@ -84,7 +89,7 @@ class Document {
     return `https://www.zborovna.sk/kniznica.php?action=download&id=${id}&save=1`;
   }
 
-  static searchURL({ school = "", subject = "", year = "", post = "", filter = "", search = "", page = 0 }) {
+  static searchURL({ school = "", subject = "", year = "", post = "", filter = "listing_kvalitne", search = "", page = 0 }) {
     return `https://www.zborovna.sk/naj.php?vlib_school_type_id=${school}&vlib_subject_id=${subject}&vlib_grade_id=${year}&vlib_prispevok_id=${post}&action=${filter}&search=${search}&strana=${page}`;
   }
 
@@ -95,16 +100,16 @@ class Document {
       /<table.*?cellspacing="4".*?cellpadding="0".*?border="0".*?width="95%">.*?<a.*?href="(.*?)".*?class="nove">(.*?)<\/a>.*?<img src="(.*?)".*?>.*?<strong>.*?Predmet:.*?<\/strong>(.*?)<.*?<strong>.*?<\/strong>(.*?)<.*?Pridaný:(.*?)<.*?<\/table>/gims;
     log(`§33[Document] §37Parsing HTML...`);
     const documents: parsedHTMLDocument[] = [...html.matchAll(DocumentRegex)].map(document => {
-      const documentID = new URLSearchParams(document.at(1).replace(";", "&")).get("id");
-      const documentThumbnail = ("https://www.zborovna.sk" + document.at(3)).split(";").join("&");
+      const documentID = new URLSearchParams(document[1].replace(";", "&")).get("id");
+      const documentThumbnail = ("https://www.zborovna.sk" + document[3]).split(";").join("&");
 
       return {
         documentID: Number(documentID),
-        documentName: document.at(2),
+        documentName: document[2],
         documentThumbnail: documentThumbnail,
-        documentSubject: document.at(4),
-        documentClassYear: document.at(5).trim(),
-        documentAddition: document.at(6).trim(),
+        documentSubject: document[4],
+        documentClassYear: document[5].trim(),
+        documentAddition: document[6].trim(),
         pageCount,
       };
     });
