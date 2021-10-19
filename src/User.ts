@@ -1,4 +1,4 @@
-import { Data } from "./Zborovna";
+import { Messages } from "./Messages";
 import fetch from "node-fetch";
 import CookieJar from "../lib/CookieJar";
 import { log } from "../lib/log";
@@ -9,15 +9,17 @@ export interface credentials {
   password?: string;
 }
 
-class User {
-  private credentials: credentials;
-  private cookies: CookieJar;
-  public data: Data;
+// console.log(Messages);
+
+class User extends Messages {
+  public credentials: credentials;
+  public cookies: CookieJar;
   // PAGES
   private initPage = "https://www.zborovna.sk/novinky/index.php";
   private loginPage = "https://www.zborovna.sk/login.php";
 
-  constructor(data = {}) {
+  constructor() {
+    super();
     this.credentials = {};
     this.cookies = new CookieJar();
   }
@@ -50,7 +52,7 @@ class User {
       body: `login=${username}&password=${password}&redir=bm92aW5reS9pbmRleC5waHA%3D&jjs=1`,
     });
 
-    const error = (errorName: string) => (response.url as string).match(errorName);
+    const error = (errorName: string) => response.url.match(errorName);
 
     if (error("error") || error("login_form")) {
       log(`§33[ZborovnaAPI] §37There was an error while attempting to login.`);
@@ -63,22 +65,11 @@ class User {
       return {};
     }
     log(`§33[ZborovnaAPI] §37Login was successful!`);
-    this.credentials = { username, password };
 
-    this.data = {
-      ...this.data,
-      user: {
-        cookies: this.cookies,
-        credentials: this.credentials,
-      },
-    };
+    this.credentials = { username, password };
 
     return this;
   }
-
-  /**
-   * TODO: add support for sending message, receiving message
-   */
 }
 
 export { User };
