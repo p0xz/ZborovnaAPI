@@ -10,9 +10,9 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "declaration": true,
-    "baseUrl": ".",
-    "typeRoots": ["node_modules/@types/", "./lib/@types/"]
+    "baseUrl": "."
+    // "typeRoots": ["node_modules/@types/", "./lib/@types/"]
   },
   "exclude": ["node_modules"],
-  "include": ["./src/*", "index.ts"]
+  "include": ["./src/*", "index.ts", "lib/ParseCharCode.ts"]
 }
