@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "start": "ts-node-dev --respawn index.ts",
+    "start": "ts-node-dev --respawn test.ts",
     "dev": "nodemon --exec npx ts-node index.ts",
     "dev:debug": "nodemon --config nodemon.json --inspect index.ts"
   },
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.10.3",
+    "@types/node-fetch": "^3.0.3",
     "mkdirp": "^1.0.4",
     "nodemon": "^2.0.13",
     "rimraf": "^3.0.2",
