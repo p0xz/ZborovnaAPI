@@ -38,6 +38,11 @@ zborovna
   .catch(error => {
     // Catch errors
   });
+// You can access all methods using ('zborovna') like this
+(async () => {
+  await zborovna.login("username", "password");
+  const user = zborovna.user;
+})();
 ```
 
 ## Examples
@@ -73,9 +78,9 @@ const zborovna = new Zborovna();
 
   const location = path.join(__dirname, "./files/");
   // This will set where your files should save
-  zborovna.document.setLocation(location);
+  zborovna.setLocation(location);
 
-  console.log(zborovna.document.location);
+  console.log(zborovna.location);
 })();
 ```
 
@@ -137,20 +142,44 @@ const zborovna = new Zborovna();
 })();
 ```
 
-# API
+### Get user messages
 
-### Data
+```javascript
+const { Zborovna } = require("zborovna-api");
 
-This object holds basic information about user and his cookies
+const zborovna = new Zborovna();
 
-```typescript
-interface Data {
-  user?: {
-    cookies: CookieJar;
-    credentials: credentials;
-  };
-}
+(async () => {
+  await zborovna.login("username", "password");
+
+  const messages = await zborovna.user.getMessages(/*Page number: default 0*/);
+  const latestPage = messages.pageCount; // This will return last possible number for ('Page Number')
+
+  console.log(messages);
+})();
 ```
+
+### Get message context
+
+```javascript
+const { Zborovna } = require("zborovna-api");
+
+const zborovna = new Zborovna();
+
+(async () => {
+  await zborovna.login("username", "password");
+
+  const messages = await zborovna.user.getMessages(/*Page number: default 0*/);
+  // This will return context of first message
+  const MessageCtx = await zborovna.user.getContextOfMessage(messages.data[0]);
+  messages.data.forEach(async msg => {
+    const MsgCtx = await zborovna.user.getContextOfMessage(msg);
+    console.log(MsgCtx);
+  });
+})();
+```
+
+# API
 
 ### ParsedDocument
 
@@ -168,6 +197,44 @@ interface parsedHTMLDocument {
 }
 ```
 
+### GetMessages Interface
+
+```typescript
+interface requestedMessages {
+  currentPage: number;
+  pageCount: number;
+  messageCount: number;
+  data: Array<parsedMessage>;
+}
+
+interface parsedMessage {
+  name: string;
+  type: string;
+  subject: string;
+  hasAttachment: boolean;
+  messageURL: string;
+  receivedAt: string;
+}
+```
+
+### Message Context Interface
+
+```typescript
+interface messageCtx {
+  from: string;
+  userBlockURL: string;
+  subject: string;
+  date: string;
+  messages: string | Array<iMessages>;
+}
+
+interface iMessages {
+  profileImageURL: string;
+  message: Array<string>;
+  _raw: string;
+}
+```
+
 ## queryObject
 
 **Note**: I didn't make these key values it's based on original zborovna choose. Each value is specific and is used for representation.
@@ -177,14 +244,14 @@ These are possible value for each queryObject key.
 ### School
 
 ```javascript
-schools = [
-  1, // Základná škola
-  2, // Stredná škola
-  3, // Materská škola
-  4, // Umelecká škola
-  5, // Iné
-  6, // Špeciálna škola
-];
+schools = {
+  zakladna_skola: 1,
+  stredna_skola: 2,
+  materska_skola: 3,
+  umelecka_skola: 4,
+  ine: 5,
+  specialna_skola: 6,
+};
 ```
 
 #### Example
