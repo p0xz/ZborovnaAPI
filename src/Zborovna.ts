@@ -7,7 +7,7 @@ import { log } from "../lib/log";
 import fs from "fs/promises";
 
 class Zborovna extends Document {
-  public user: any;
+  public user: User;
   private autoLogin: boolean;
 
   constructor(autoLogin = true) {
@@ -31,8 +31,8 @@ class Zborovna extends Document {
       user
         .login(username, password)
         .then(res => {
+          // @ts-ignore
           this.user = res;
-          // console.log(res);
 
           resolve(this.user);
         })
