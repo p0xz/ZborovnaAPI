@@ -20,6 +20,20 @@ interface parsedMessage {
   receivedAt: string;
 }
 
+interface messageCtx {
+  from: string;
+  userBlockURL: string;
+  subject: string;
+  date: string;
+  messages: string | Array<iMessages>;
+}
+
+interface iMessages {
+  profileImageURL: string;
+  message: Array<string>;
+  _raw: string;
+}
+
 class Messages {
   public cookies: CookieJar;
   public credentials: credentials;
@@ -67,7 +81,7 @@ class Messages {
     });
   }
 
-  async getContextOfMessage(message: parsedMessage) {
+  async getContextOfMessage(message: parsedMessage): Promise<messageCtx> {
     const { messageURL } = message;
     const contextRegEx =
       /<div class="flex">.*?<div class="obrazok">.*?<img.*?src="(?<profileImage>.*?)".*?>.*?<\/div>.*?<div class="old_message_row">.*?<strong>.*?<\/strong>.*?<br \/>(?<message>.*?)<\/div>/gms;
