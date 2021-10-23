@@ -106,9 +106,9 @@ class Zborovna extends Document {
           cookie: `${this.user.cookies.getCookie("PHPSESSID")}; ${this.user.cookies.getCookie("TestCookie")}`,
         },
       })
-        .then((res: any) => res.text())
-        .then((html: string) => resolve(Document.parseDocumentHTML(html)))
-        .catch((err: any) => reject(err));
+        .then(res => res.text())
+        .then(html => resolve(Document.parseDocumentHTML(html)))
+        .catch(err => reject(err));
     });
   }
 }
