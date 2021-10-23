@@ -169,10 +169,49 @@ const zborovna = new Zborovna();
   const messages = await zborovna.user.getMessages(/*Page number: default 0*/);
   // This will return context of first message
   const MessageCtx = await zborovna.user.getContextOfMessage(messages.data[0]);
+  // OR get context of all messages
   messages.data.forEach(async msg => {
     const MsgCtx = await zborovna.user.getContextOfMessage(msg);
     console.log(MsgCtx);
   });
+})();
+```
+
+### Block | Unblock message sender
+
+```javascript
+const { Zborovna } = require("zborovna-api");
+
+const zborovna = new Zborovna();
+
+(async () => {
+  await zborovna.login("username", "password");
+
+  const messages = await zborovna.user.getMessages(/*Page number: default 0*/);
+  // This will return context of first message
+  const MessageCtx = await zborovna.user.getContextOfMessage(messages.data[0]);
+  // This will block user that sends you message.
+  MessageCtx.blockSender();
+  // This will unblock user that sends you message.
+  MessageCtx.unblockSender();
+})();
+```
+
+### Unblock user
+
+```javascript
+const { Zborovna } = require("zborovna-api");
+
+const zborovna = new Zborovna();
+
+(async () => {
+  await zborovna.login("username", "password");
+  // Return an Array with blocked users or an empty array dependes if you have blocked someone.
+  const blockedUsers = zborovna.user.blockedUsers;
+  // Get user you want
+  const user = blockedUsers.find(user => user.userName === "username");
+  // unblock user
+  user.unblockUser();
 })();
 ```
 
