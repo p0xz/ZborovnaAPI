@@ -74,7 +74,7 @@ class CookieJar {
   }
 
   public setCookies(cookies: Array<string>): void {
-    const Cookies = cookies.map((cookie) => Cookie.parse(cookie));
+    const Cookies = cookies.map(cookie => Cookie.parse(cookie));
 
     this.cookies.push(...Cookies);
 
@@ -83,12 +83,12 @@ class CookieJar {
 
   public getCookies(formatted: boolean = true) {
     if (!formatted) return this.cookies;
-    const formattedCookies = this.cookies.map((cookie) => Cookie.toString(cookie));
+    const formattedCookies = this.cookies.map(cookie => Cookie.toString(cookie));
     return formattedCookies;
   }
 
   public getCookie(name: string, formatted: boolean = true) {
-    let cookie = this.cookies.find((cookie) => cookie.Cookie.name === name);
+    let cookie = this.cookies.find(cookie => cookie.Cookie.name === name);
     if (!cookie) return {};
     return Cookie.toString(cookie);
   }
