@@ -67,6 +67,7 @@ class User extends Messages {
     log(`§33[ZborovnaAPI] §37Login was successful!`);
 
     this.credentials = { username, password };
+    await this.getBlockedUsers();
 
     return this;
   }
