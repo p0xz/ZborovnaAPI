@@ -31,10 +31,10 @@ const color = (num = 0) => `\x1b[${num}m`;
  */
 function log(value: any | string, ...optionalParams: any) {
   if (typeof value !== "string") return console.log(value);
-  if (Array.isArray(optionalParams) && optionalParams.length === 0) optionalParams = "";
+  if (Array.isArray(optionalParams) && !optionalParams.length) optionalParams = "";
   let message: string[] | string = [];
   for (const [_raw, colorCode] of value.matchAll(/§(\d{0,2})|([^\s]+.)/gim)) {
-    if (colorCode) message.push(color(+colorCode));
+    if (colorCode) message.push(color(Number(colorCode)));
     else message.push(_raw, color(0));
   }
   message = message.join("");
