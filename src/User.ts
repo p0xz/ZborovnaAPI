@@ -9,8 +9,6 @@ export interface credentials {
   password?: string;
 }
 
-// console.log(Messages);
-
 class User extends Messages {
   public credentials: credentials;
   public cookies: CookieJar;
