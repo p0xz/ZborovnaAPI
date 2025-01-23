@@ -1,5 +1,7 @@
 # Zborovna API
 
+## This library is heavely deprecated. Might work on it in the future.
+
 This is an unofficial Zborovna API.
 
 If you find bugs, have any questions or suggestions for features, please let me know and submit an issue.
