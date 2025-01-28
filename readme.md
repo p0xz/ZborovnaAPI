@@ -1,6 +1,6 @@
 # Zborovna API
 
-## This library is heavely deprecated. Might work on it in the future.
+## This library is heavely deprecated. Refactored version coming soon (2025)
 
 This is an unofficial Zborovna API.
 
